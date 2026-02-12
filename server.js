@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import cookieParser from "cookie-parser";
 import authRoutes from './routes/authRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
+import cors from 'cors';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,13 @@ app.use(express.urlencoded({ extended : true }));
 connectDB();
 
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // React frontend
+    credentials: true,              // VERY IMPORTANT
+  })
+);
+
 app.use('/api/auth', authRoutes);
 app.use('/api/task', taskRoutes);
 

@@ -49,7 +49,7 @@ export const updateTask = async(req, res) => {
     try{
         let task = await Task.findById(req.params.id);
 
-        if(req.user.role !== "admin" && req.user._id !== task.user._id){
+        if(req.user.role !== "admin" && req.user._id.toString() !== task.user._id.toString()){
             res.status(403).json({ message : "not authorize to edit this task"})
         }
         Object.assign(task, req.body);
